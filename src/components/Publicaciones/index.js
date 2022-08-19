@@ -5,7 +5,7 @@ import * as usuariosActions from '../../actions/usuariosActions';
 import * as publicacionesActions from '../../actions/publicacionesActions';
 
 const { traerTodos: usuariosTraerTodos } = usuariosActions;
-const { traerTodos: publicacionesTraerTodos } = publicacionesActions;
+const { traerPorUsuario: publicacionesTraerPorUsuario } = publicacionesActions;
 
 function withParams(Component) {
 	return props => <Component {...props} params={useParams()} />;
@@ -13,10 +13,11 @@ function withParams(Component) {
 
 class Publicaciones extends Component {
 
-	componentDidMount() {
+	async componentDidMount() {
 		if (!this.props.usuariosReducer.usuarios.lenght) {
-			this.props.traerTodos();
+			await this.props.usuariosTraerTodos();
 		}
+		this.props.publicacionesTraerPorUsuario(this.props.params.key);
 	}
 
 	render() {
@@ -47,8 +48,8 @@ const mapStateToProps = ({usuariosReducer, publicacionesReducer}) => {
 
 //Esto con multiples dispatch
 const mapDispatchToProps = {
-	...usuariosActions,
-	...publicacionesActions,
+	usuariosTraerTodos,
+	publicacionesTraerPorUsuario,
 };
 
 
