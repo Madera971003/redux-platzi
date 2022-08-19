@@ -8,7 +8,9 @@ import Tabla from './Tabla';
 class Usuarios extends Component {
 
 	componentDidMount() {
-    this.props.traerTodos();
+		if(this.props.usuarios.length === 0){
+			this.props.traerTodos();
+		}
 	}
 
 	ponerFilas = () => this.props.usuarios.map((usuario) => (
@@ -42,6 +44,7 @@ class Usuarios extends Component {
   }
 
 	render() {
+		console.log(this.props)
 		return (
 			<div>
         <h1>Usuarios</h1>
